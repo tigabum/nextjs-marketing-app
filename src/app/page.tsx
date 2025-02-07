@@ -10,7 +10,20 @@ export const metadata = generateSEO({
 export default function HomePage() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Welcome to Our Marketing App</h1>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">
+          Welcome to Our Marketing App
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          Discover our collection of premium products
+        </p>
+        <a
+          href="/products"
+          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+        >
+          View Products
+        </a>
+      </div>
     </main>
   );
 }
