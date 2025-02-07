@@ -1,6 +1,7 @@
-import { Metadata } from "next";
+import { generateSEO } from "@/utils/seo";
 import { Product } from "@/types";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -21,20 +22,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProduct(resolvedParams.id);
 
   if (!product) {
-    return {
+    return generateSEO({
       title: "Product Not Found",
-    };
+      description: "The requested product could not be found.",
+      path: `/products/${resolvedParams.id}`,
+    });
   }
 
-  return {
+  return generateSEO({
     title: `${product.name} | Marketing App`,
     description: product.description,
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      type: "website",
-    },
-  };
+    path: `/products/${resolvedParams.id}`,
+  });
 }
 
 export default async function ProductPage({ params }: Props) {

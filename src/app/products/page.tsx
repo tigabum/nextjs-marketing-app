@@ -1,17 +1,13 @@
-import { Metadata } from "next";
+import { generateSEO } from "@/utils/seo";
 import { Product } from "@/types";
 import ProductGrid from "@/components/ProductGrid";
 import ProductFilterWrapper from "@/components/ProductFilterWrapper";
 
-export const metadata: Metadata = {
-  title: "Products | Marketing App",
-  description: "Browse our collection of premium products",
-  openGraph: {
-    title: "Products | Marketing App",
-    description: "Browse our collection of premium products",
-    type: "website",
-  },
-};
+export const metadata = generateSEO({
+  title: "Our Products | Marketing App",
+  description: "Browse our extensive collection of premium products.",
+  path: "/products",
+});
 
 async function getProducts(): Promise<Product[]> {
   try {
