@@ -1,14 +1,11 @@
-import { Metadata } from "next";
+import { generateSEO } from "@/utils/seo";
 
-export const metadata: Metadata = {
-  title: "Home | Marketing App",
-  description: "Welcome to our marketing app",
-  openGraph: {
-    title: "Home | Marketing App",
-    description: "Welcome to our marketing app",
-    type: "website",
-  },
-};
+export const metadata = generateSEO({
+  title: "Marketing App - Premium Products",
+  description:
+    "Discover our collection of premium products with the best prices and quality.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (
