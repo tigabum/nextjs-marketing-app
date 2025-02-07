@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Premium Wireless Headphones",
+      "description": "High-quality wireless headphones with noise cancellation",
+      "price": 299.99,
+      "image": "/images/headphones.jpg",
+      "category": "Electronics"
+    },
+    {
+      "id": 2,
+      "name": "Smart Fitness Watch",
+      "description": "Track your fitness goals with this advanced smartwatch",
+      "price": 199.99,
+      "image": "/images/watch.jpg",
+      "category": "Electronics"
+    }
+  ]
+}
