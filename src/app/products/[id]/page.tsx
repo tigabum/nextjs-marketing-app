@@ -3,7 +3,7 @@ import { Product } from "@/types";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 async function getProduct(id: string): Promise<Product | null> {
@@ -16,10 +16,9 @@ async function getProduct(id: string): Promise<Product | null> {
   }
 }
 
-export async function generateMetadata({
-  params: { id },
-}: Props): Promise<Metadata> {
-  const product = await getProduct(await id);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.id);
 
   if (!product) {
     return {
@@ -38,8 +37,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({ params: { id } }: Props) {
-  const product = await getProduct(await id);
+export default async function ProductPage({ params }: Props) {
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.id);
 
   if (!product) {
     notFound();
