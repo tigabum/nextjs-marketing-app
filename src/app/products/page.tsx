@@ -10,12 +10,16 @@ export const metadata = generateSEO({
 });
 
 async function getProducts(): Promise<Product[]> {
-  try {
-    const products = await import("@/data/products.json");
-    return products.products;
-  } catch (error) {
+  const res = await fetch("http://localhost:3000/api/products", {
+    next: { revalidate: 3600 }, // Cache for 1 hour
+  });
+
+  if (!res.ok) {
     throw new Error("Failed to fetch products");
   }
+
+  const data = await res.json();
+  return data.products;
 }
 
 export default async function ProductsPage() {

@@ -2,37 +2,34 @@
 
 import { useState } from "react";
 
-interface FilterProps {
-  onFilterChange: (filters: {
-    category: string;
-    minPrice: number | "";
-    maxPrice: number | "";
-  }) => void;
+interface Filters {
+  category: string;
+  minPrice: number | "";
+  maxPrice: number | "";
 }
 
-export default function ProductFilter({ onFilterChange }: FilterProps) {
-  const [category, setCategory] = useState("");
-  const [minPrice, setMinPrice] = useState<number | "">("");
-  const [maxPrice, setMaxPrice] = useState<number | "">("");
+export default function ProductFilter({
+  onFilterChange,
+}: {
+  onFilterChange: (filters: Filters) => void;
+}) {
+  const [filters, setFilters] = useState<Filters>({
+    category: "",
+    minPrice: "",
+    maxPrice: "",
+  });
 
-  const handleChange = (
-    field: "category" | "minPrice" | "maxPrice",
-    value: string
-  ) => {
-    let newValue: string | number = value;
-    if (field === "minPrice" || field === "maxPrice") {
-      newValue = value === "" ? "" : Number(value);
-    }
-
-    if (field === "category") setCategory(value);
-    if (field === "minPrice") setMinPrice(newValue as number | "");
-    if (field === "maxPrice") setMaxPrice(newValue as number | "");
-
-    onFilterChange({
-      category,
-      minPrice,
-      maxPrice,
-    });
+  const handleChange = (field: string, value: string) => {
+    const newFilters: Filters = {
+      ...filters,
+      [field]: field.includes("Price")
+        ? value === ""
+          ? ""
+          : Number(value)
+        : value,
+    };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
   };
 
   return (
@@ -40,10 +37,13 @@ export default function ProductFilter({ onFilterChange }: FilterProps) {
       <h2 className="text-lg font-semibold mb-4">Filters</h2>
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-2">Category</label>
+          <label htmlFor="category" className="block text-sm font-medium mb-2">
+            Category
+          </label>
           <select
+            id="category"
             className="w-full border rounded-md p-2"
-            value={category}
+            value={filters.category}
             onChange={(e) => handleChange("category", e.target.value)}
           >
             <option value="">All Categories</option>
@@ -52,23 +52,30 @@ export default function ProductFilter({ onFilterChange }: FilterProps) {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Price Range</label>
-          <div className="flex gap-2">
-            <input
-              type="number"
-              placeholder="Min"
-              className="w-full border rounded-md p-2"
-              value={minPrice}
-              onChange={(e) => handleChange("minPrice", e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Max"
-              className="w-full border rounded-md p-2"
-              value={maxPrice}
-              onChange={(e) => handleChange("maxPrice", e.target.value)}
-            />
-          </div>
+          <label htmlFor="minPrice" className="block text-sm font-medium mb-2">
+            Min Price
+          </label>
+          <input
+            id="minPrice"
+            type="number"
+            className="w-full border rounded-md p-2"
+            placeholder="Min"
+            value={filters.minPrice}
+            onChange={(e) => handleChange("minPrice", e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="maxPrice" className="block text-sm font-medium mb-2">
+            Max Price
+          </label>
+          <input
+            id="maxPrice"
+            type="number"
+            className="w-full border rounded-md p-2"
+            placeholder="Max"
+            value={filters.maxPrice}
+            onChange={(e) => handleChange("maxPrice", e.target.value)}
+          />
         </div>
       </div>
     </div>
