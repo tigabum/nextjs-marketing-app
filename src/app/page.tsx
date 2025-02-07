@@ -1,37 +1,21 @@
-import Image from "next/image";
+"use client";
 import { Metadata } from "next";
-import { Product } from "@/types";
-import ProductGrid from "@/components/ProductGrid";
-import ProductFilter from "@/components/ProductFilter";
 
 export const metadata: Metadata = {
-  title: "Products | Marketing App",
-  description: "Browse our collection of premium products",
+  title: "Home | Marketing App",
+  description: "Welcome to our marketing app",
   openGraph: {
-    title: "Products | Marketing App",
-    description: "Browse our collection of premium products",
+    title: "Home | Marketing App",
+    description: "Welcome to our marketing app",
     type: "website",
   },
 };
 
-async function getProducts(): Promise<Product[]> {
-  // In a real app, this would be an API call
-  const products = await import("@/data/products.json");
-  return products.products;
-}
-
-export default async function ProductsPage() {
-  const products = await getProducts();
-
+export default function HomePage() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Our Products</h1>
-      <div className="flex flex-col md:flex-row gap-8">
-        <aside className="w-full md:w-64">
-          <ProductFilter />
-        </aside>
-        <ProductGrid products={products} />
-      </div>
+      <h1 className="text-3xl font-bold mb-8">Welcome to Our Marketing App</h1>
+      {/* Add home page content */}
     </main>
   );
 }
